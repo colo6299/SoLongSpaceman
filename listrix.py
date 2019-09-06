@@ -17,24 +17,33 @@ def letter_eater(letter: str, size: int = 26, offset: int = 96):
     return retlist
 
 # word in, bool listrix2 out!
-def word_explode(word: str):
+def word_eater(word: str):
     char_list = list(word)
     retlist = list()
     for char in char_list:
         retlist.append(letter_eater(char))
     return retlist
 
+# word list in, listrix root (listr) out! 
+def list_eater(word_list):
+    listr = list()
+    for word in word_list:
+        listr.append(word_eater(word))
+    return listr
+
 
 class Listrix3:
     
-    len_list = list()
+    # init => explode => set_listr => build_hstrx
+
+    len_listr = list()
     # Histogram list matrix => histrix => hstrx
     hstrx_len = list()
     hstrx_wid = list()
     hstrx_dep = list()
 
     def __init__(self):
-        self.len_list
+        self.len_listr
         self.hstrx_len
         self.hstrx_wid
         self.hstrx_dep
@@ -44,29 +53,32 @@ class Listrix3:
         self.depth = 0
 
     def explode(self, length: int, width: int, depth: int = 26):
-        self.len_list = []
+        self.len_listr = []
         self.length = length
         self.width = width
         self.depth = depth
         for i in range(length):
-            self.len_list.append(list())
+            self.len_listr.append(list())
             for j in range(width):
-                self.len_list[i].append([False] * depth)
+                self.len_listr[i].append([False] * depth)
+
+    def set_listr(self, listr_in):
+        self.len_listr = listr_in
 
     def axial_len(self, width: int, depth: int):
         retrix = list()
-        for listrix in self.len_list:
+        for listrix in self.len_listr:
                 retrix.append(listrix[width][depth])
         return retrix
 
     def axial_wid(self, length: int, depth: int):
         retrix = list()
-        for lisrix in self.len_list[length]:
+        for lisrix in self.len_listr[length]:
             retrix.append(lisrix[depth])
         return retrix
 
     def axial_dep(self, length: int, width: int):
-        return self.len_list[length][width]
+        return self.len_listr[length][width]
 
     def build_hstrx_len(self):
         ristrix = list()
