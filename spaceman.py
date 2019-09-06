@@ -5,7 +5,27 @@ import listrix   # Yeah, I already regret it.
 # Hey, if I'm going to burn out, better sooner rather than later, right?
 # Besides, it's not much of a 'secret' word if the program knows it!
 
-def load_words_list():
+def user_input()):
+    # the input function will display a message in the terminal
+    # and wait for user input.
+    user_input = input()
+    return user_input.lower()
+
+def list_item_length(list_in):
+    max_len = 0
+    for word in list_in:
+        if len(word) > max_len:
+            max_len = len(word)
+    return max_len
+
+def prune_list(list_in, length):
+    retlist = list()
+    for word in list_in:
+        if len(word) == length:
+            retlist.append(word)
+    return retlist
+
+def load_words_list(len_choice: int = 5):
     '''
     A function that reads a text file of words and randomly selects one to use as the secret word
         from the list.
@@ -16,12 +36,17 @@ def load_words_list():
     words_list = f.readlines()
     f.close()
     words_list = words_list[0].split(' ')
-    
-    # oops aw heck I dropped my #, did anyone see where it landed?  
 
+    max_length = list_item_length(words_list)
 
-    # secret_word = random.choice(words_list)
-    return words_list
+    print('Word length? ')
+    user_input = int(user_input())
+
+    if int(user_input) not in range(max_length):
+        print('Please enter a number between 1 and ' + str(max_length))
+        load_words_list(len_choice)
+    else: 
+        return prune_list(words_list, int(user_input))
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
