@@ -1,14 +1,28 @@
-
-
 # Pray for me.
 
 
+
+# Sums all values in a list which evaluate to True TODO: put word stuff in (sub?)class of their own
 def bool_eater(bool_list):
     ret_int = 0
     for bl in bool_list:
         if bl:
             ret_int += 1
     return ret_int
+
+# takes in a character, and expands it into a bool list
+def letter_eater(letter: str, size: int = 26, offset: int = 96):
+    retlist = [False] * size
+    retlist[ord(letter) - offset - 1] = True
+    return retlist
+
+# word in, bool listrix2 out!
+def word_explode(word: str):
+    char_list = list(word)
+    retlist = list()
+    for char in char_list:
+        retlist.append(letter_eater(char))
+    return retlist
 
 
 class Listrix3:
@@ -53,8 +67,7 @@ class Listrix3:
 
     def axial_dep(self, length: int, width: int):
         return self.len_list[length][width]
-    
-    
+
     def build_hstrx_len(self):
         ristrix = list()
         for i in range(self.width):
@@ -70,8 +83,3 @@ class Listrix3:
             for j in range(self.depth):
                 ristrix[i].append(bool_eater(self.axial_wid(i, j)))
         self.hstrx_wid = ristrix
-
-l = Listrix3()
-l.explode(100, 4, 26)
-l.build_hstrx_wid()
-print(l.hstrx_wid[99][25])

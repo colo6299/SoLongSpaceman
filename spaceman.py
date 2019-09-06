@@ -1,6 +1,11 @@
 import random
+import listrix   # Yeah, I already regret it.
 
-def load_word():
+
+# Hey, if I'm going to burn out, better sooner rather than later, right?
+# Besides, it's not much of a 'secret' word if the program knows it!
+
+def load_words_list():
     '''
     A function that reads a text file of words and randomly selects one to use as the secret word
         from the list.
@@ -10,10 +15,13 @@ def load_word():
     f = open('words.txt', 'r')
     words_list = f.readlines()
     f.close()
-
     words_list = words_list[0].split(' ')
-    secret_word = random.choice(words_list)
-    return secret_word
+    
+    # oops aw heck I dropped my #, did anyone see where it landed?  
+
+
+    # secret_word = random.choice(words_list)
+    return words_list
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
@@ -58,12 +66,38 @@ def is_guess_in_word(guess, secret_word):
 
 
 
-def spaceman(secret_word):
-    '''
-    A function that controls the game of spaceman. Will start spaceman in the command line.
-    Args:
-      secret_word (string): the secret word to guess.
-    '''
+# Now, this is where you ask, "Wyatt, how can you have a spaceman pogram that doesn't choose a word?"
+# Well, I'll update the comment text when I figure that one out.
+
+def spaceman():
+
+    print('''
+
+    ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢
+    Our stranded spaceman has found a rocket to get home with. One problem- 
+    It's locked! There's a keypad attatched to both a geiger counter, and 
+    the lock on the hatch. The pad takes a code word, but he can't reach! 
+    Can you help the spaceman beat Schrodingers;Hatch and get back home? 
+
+    It's exactly as easy as it seems. Good luck, you're going to need it.
+    ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢
+    
+    
+    Press Enter to continue.
+
+    ''')
+
+    split_list = load_words_list()
+
+
+
+
+
+
+
+
+
+
 
 
     #TODO: show the player information about the game according to the project spec
@@ -77,10 +111,3 @@ def spaceman(secret_word):
     #TODO: check if the game has been won or lost
 
 
-
-
-
-
-#These function calls that will start the game
-secret_word = load_word()
-spaceman(load_word())
