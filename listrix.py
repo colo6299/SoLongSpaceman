@@ -95,3 +95,16 @@ class Listrix3:
             for j in range(self.depth):
                 ristrix[i].append(bool_eater(self.axial_wid(i, j)))
         self.hstrx_wid = ristrix
+
+    def rel_chance(histrix_in):
+        histrix_out = list()
+        i = 0
+        for hist in histrix_in:
+            histrix_out.append([])
+            l_sum = 0
+            for count in hist:
+                l_sum += count
+            for count in hist:
+                histrix_out[i].append(float(count) / l_sum)
+            i += 1
+        return histrix_out
