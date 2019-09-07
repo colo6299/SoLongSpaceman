@@ -24,6 +24,29 @@ def word_eater(word: str):
         retlist.append(letter_eater(char))
     return retlist
 
+# returns a string containing numbers representing the slots a particular letter occupies
+# Look, it's better than n^n nested lists
+def letter_width_eater(wid_list):
+    retstring = ''
+    for i in range(len(wid_list)):
+        if wid_list[i] == True:
+            retstring = retstring + str(i) + '-'
+    if len(retstring) > 0:
+        retstring = str(retstring[:-1])
+
+# uhhhhhhhh 
+# I literally just wrote this and idk what it does
+# Well, it doesn't throw errors, so I guess it ships
+def word_slot_eater(word_index, listrix):
+    retlist = list()
+    for letter_index in listrix.depth:
+        retlist.append(letter_width_eater(listrix.axial_wid(word_index, letter_index))) # oh mhyy
+    return retlist
+
+def slotrix_eater(listrix):
+    for i in range(len(listrix.len_listr)):
+        listrix.len_slotrix.append(i, listrix)
+
 # word list in, listrix root (listr) out! 
 def list_eater(word_list):
     listr = list()
@@ -33,10 +56,19 @@ def list_eater(word_list):
 
 
 class Listrix3:
+
+    class string_count:
+        def __init__(self, string: str, count: int):
+            self.string = string
+            self.count = count
+
+        def plus_plus(self):
+            self.count += 1
     
     # init => explode => set_listr => build_hstrx
 
     len_listr = list()
+    len_slotrix = list()
     # Histogram list matrix => histrix => hstrx
     hstrx_len = list()
     hstrx_wid = list()
@@ -44,6 +76,7 @@ class Listrix3:
 
     def __init__(self):
         self.len_listr
+        self.len_slotrix
         self.hstrx_len
         self.hstrx_wid
         self.hstrx_dep
@@ -90,11 +123,18 @@ class Listrix3:
     
     def build_hstrx_wid(self):
         ristrix = list()
-        for i in range(self.length):
+        for i in range(len(self.len_listr)):
             ristrix.append(list())
             for j in range(self.depth):
                 ristrix[i].append(bool_eater(self.axial_wid(i, j)))
         self.hstrx_wid = ristrix
+
+    # if there's a weird issue, check width thing here
+    #def build_slotrix(self):
+    #    #for i in range(len(self.len_listr)):
+    #        #self.len_slotrix.append()
+    #        #for j in range(self.width):
+    #            self.len_slotrix[i].append(self.string_count('',0))
 
     def rel_chance(histrix_in):
         histrix_out = list()
