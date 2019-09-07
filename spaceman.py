@@ -99,12 +99,14 @@ def spaceman():
     print('''
 
     ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢
+
     Our stranded spaceman has found a rocket to get home with. One problem- 
     It's locked! There's a keypad attatched to both a geiger counter, and 
     the lock on the hatch. The pad takes a code word, but he can't reach! 
-    Can you help the spaceman break Schrodingers;Code and get back home? 
+    Can you help the spaceman crack Schrodingers;Code and get back home? 
 
     It's exactly as easy as it seems. Good luck, you're going to need it.
+
     ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢
     
     
@@ -124,8 +126,16 @@ def spaceman():
     lstrx.build_hstrx_len()
     lstrx.build_hstrx_wid()
 
-    print(split_list)
-    print(lstrx.hstrx_wid)
+    listrix.len_slotrix = listrix.slotrix_eater(lstrx)
+
+    # print(lstrx.len_slotrix)
+    # print(listrix.slotrix_eater(lstrx))
+    # print(lstrx.axial_wid(0,0))
+    # print(lstrx.axial_wid(0,0))
+    # print(listrix.letter_width_eater(lstrx.axial_wid(0,0))) # Works!
+    # print(listrix.word_slot_eater(0, lstrx)) # Also works!
+    print(listrix.slotrix_eater(lstrx))
+    # print(lstrx.len_slotrix)
     
     
 spaceman()

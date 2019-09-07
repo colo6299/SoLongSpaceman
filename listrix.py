@@ -33,19 +33,23 @@ def letter_width_eater(wid_list):
             retstring = retstring + str(i) + '-'
     if len(retstring) > 0:
         retstring = str(retstring[:-1])
+    return retstring
 
 # uhhhhhhhh 
 # I literally just wrote this and idk what it does
 # Well, it doesn't throw errors, so I guess it ships
 def word_slot_eater(word_index, listrix):
     retlist = list()
-    for letter_index in listrix.depth:
+    for letter_index in range(listrix.depth):
         retlist.append(letter_width_eater(listrix.axial_wid(word_index, letter_index))) # oh mhyy
     return retlist
 
+# this is probably the one you're looking for. --Wyatt
 def slotrix_eater(listrix):
+    reslotrix = list()
     for i in range(len(listrix.len_listr)):
-        listrix.len_slotrix.append(i, listrix)
+        reslotrix.append(word_slot_eater(i, listrix))
+    return reslotrix
 
 # word list in, listrix root (listr) out! 
 def list_eater(word_list):
@@ -136,7 +140,7 @@ class Listrix3:
     #        #for j in range(self.width):
     #            self.len_slotrix[i].append(self.string_count('',0))
 
-    def rel_chance(histrix_in):
+    def rel_chance(self, histrix_in):
         histrix_out = list()
         i = 0
         for hist in histrix_in:
