@@ -6,6 +6,13 @@ import listrix   # Yeah, I already regret it.
 # Besides, it's not much of a 'secret' word if the program knows it!
 
 
+guessed_letters = []
+spaceman_state = []
+wrong_guesses = 0
+max_wrong = 7
+game_length = 0
+
+# only works for word slot histogram structure
 def hist_choice(histrix, letter_index):
     return random.choices(histrix[letter_index][0], histrix[letter_index][1])
 
@@ -29,6 +36,14 @@ def prune_list(list_in, length):
             retlist.append(word)
     return retlist
 
+def decode_nnr(nnr_selection: str):
+    return nnr_selection.split('-')
+
+#def prune_hotrix(nnr_selection, letter_index):
+#    nnr_lst = decode_nnr(nnr_selection)
+#    for slot_index in nnr_lst:
+#        for 
+
 def load_words_list():
     '''
     A function that reads a text file of words and randomly selects one to use as the secret word
@@ -47,9 +62,11 @@ def load_words_list():
     user_input = int(user_input_get())
 
     if int(user_input) not in range(max_length):
-        print('Please enter a number between 1 and ' + str(max_length - 1))
+        print('Please enter a number between 1 and ' + str(max_length - 2))
         return load_words_list()
     else: 
+        global game_length
+        game_length = int(user_input)
         return prune_list(words_list, int(user_input))
 
 def is_word_guessed(secret_word, letters_guessed):
@@ -93,6 +110,39 @@ def is_guess_in_word(guess, secret_word):
     pass
 
 
+def letter_prompt():
+    print('\nPlease guess a letter: ')
+    guess = user_input_get()
+    global guessed_letters
+    if len(guess) == 1:
+        if ord(guess) in range(97, 97+26):
+            if guess in guessed_letters:
+                print('You already guessed "' + guess + '"')
+                return letter_prompt()
+            else:
+                guessed_letters.append(guess)
+                return ord(guess) - 97
+        else:
+            print('\na LETTER you numbskull')
+            return letter_prompt()
+    else:
+        print('\nOne at a time please.')
+        return letter_prompt()
+
+def state_gen():
+    global spaceman_state
+    spaceman_state = []
+    for i in range(game_length):
+        spaceman_state.append('_ ')
+
+def display_state():
+    restr = ''
+    for string in spaceman_state:
+        restr = restr + string
+    print()
+    print(restr)
+    print()
+    print('Guessed letters: ' + str(guessed_letters))
 
 
 # Now, this is where you ask, "Wyatt, how can you have a spaceman program that doesn't choose a word?"
@@ -119,6 +169,7 @@ def spaceman():
     ''')
     input()
 
+    # No, I don't know what all this does.
     split_list = load_words_list()
     listr_pre = listrix.list_eater(split_list)
     lstrx = listrix.Listrix3()
@@ -134,6 +185,27 @@ def spaceman():
     lstrx.len_slotrix = listrix.slotrix_eater(lstrx)
     lstrx.build_hotrix()
 
+    # game start here-ish
+    state_gen()
+    failed = False
+    while not failed:
+        display_state()
+        lttr = letter_prompt()
+        chance_of_being_right = lstrx.letter_chance(lttr)
+        random_value = random.random()
+
+        # IT'S MAGIC, BABY
+        if chance_of_being_right > random_value:
+            print('\nCorrect!')
+        else: 
+            global wrong_guesses
+            wrong_guesses += 1
+            print('\nWrong!')
+        if wrong_guesses > max_wrong:
+            failed = True
+            print('\nBetter luck next time.')
+
+
     # print(lstrx.len_slotrix)
     # print(listrix.slotrix_eater(lstrx))
     # print(lstrx.axial_wid(0,0))
@@ -141,11 +213,16 @@ def spaceman():
     # print(listrix.letter_width_eater(lstrx.axial_wid(0,0))) # Works!
     # print(listrix.word_slot_eater(0, lstrx)) # Also works!
     # print(listrix.slotrix_eater(lstrx)) # Works BEAUTIFUL! 
+    '''
     print(lstrx.len_slotrix)
     print(lstrx.len_hotrix)
     print('\n')
     print(hist_choice(lstrx.len_hotrix, 0))
-    # print(lstrx.len_slotrix)
+    print('\n')
+    for i in range(26):
+        print(lstrx.letter_chance(i))
     
+    # print(lstrx.len_slotrix)
+    '''
     
 spaceman()

@@ -171,3 +171,10 @@ class Listrix3:
                 histrix_out[i].append(float(count) / l_sum)
             i += 1
         return histrix_out
+
+    def letter_chance(self, letter_index):
+        count = 0
+        for word in self.hstrx_wid:
+            if word[letter_index] > 0:
+                count += 1
+        return float(count) / float(len(self.len_listr))
