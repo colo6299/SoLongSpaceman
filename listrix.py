@@ -61,18 +61,19 @@ def list_eater(word_list):
 
 class Listrix3:
 
-    class string_count:
-        def __init__(self, string: str, count: int):
-            self.string = string
-            self.count = count
-
-        def plus_plus(self):
-            self.count += 1
+    #class string_count:
+    #    def __init__(self, string: str, count: int):
+    #        self.string = string
+    #        self.count = count
+    #
+    #    def plus_plus(self):
+    #        self.count += 1
     
     # init => explode => set_listr => build_hstrx
 
     len_listr = list()
     len_slotrix = list()
+    len_hotrix = list()
     # Histogram list matrix => histrix => hstrx
     hstrx_len = list()
     hstrx_wid = list()
@@ -81,6 +82,7 @@ class Listrix3:
     def __init__(self):
         self.len_listr
         self.len_slotrix
+        self.len_hotrix
         self.hstrx_len
         self.hstrx_wid
         self.hstrx_dep
@@ -133,7 +135,24 @@ class Listrix3:
                 ristrix[i].append(bool_eater(self.axial_wid(i, j)))
         self.hstrx_wid = ristrix
 
-    # if there's a weird issue, check width thing here
+    def build_hotrix(self):
+        hetrix = list()     
+        for letter_index in range(self.depth):
+            hetrix.append([list(), list()])
+            for i in range(len(self.len_slotrix)):
+                temp = self.len_slotrix[i][letter_index]
+                if temp == '':
+                    pass
+                elif temp not in hetrix[letter_index][0]:
+                    hetrix[letter_index][0].append(temp)
+                    hetrix[letter_index][1].append(1)
+                else: 
+                    # May god have mercy on us all.
+                    hetrix[letter_index][1][hetrix[letter_index][0].index(temp)] = hetrix[letter_index][1][hetrix[letter_index][0].index(temp)] + 1
+        self.len_hotrix = hetrix
+        
+
+    # if there's a weird issue, check width thing here EDIT: called it.
     #def build_slotrix(self):
     #    #for i in range(len(self.len_listr)):
     #        #self.len_slotrix.append()

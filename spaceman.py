@@ -5,6 +5,10 @@ import listrix   # Yeah, I already regret it.
 # Hey, if I'm going to burn out, better sooner rather than later, right?
 # Besides, it's not much of a 'secret' word if the program knows it!
 
+
+def hist_choice(histrix, letter_index):
+    return random.choices(histrix[letter_index][0], histrix[letter_index][1])
+
 def user_input_get():
     # the input function will display a message in the terminal
     # and wait for user input.
@@ -43,8 +47,8 @@ def load_words_list():
     user_input = int(user_input_get())
 
     if int(user_input) not in range(max_length):
-        print('Please enter a number between 1 and ' + str(max_length))
-        load_words_list()
+        print('Please enter a number between 1 and ' + str(max_length - 1))
+        return load_words_list()
     else: 
         return prune_list(words_list, int(user_input))
 
@@ -125,8 +129,10 @@ def spaceman():
 
     lstrx.build_hstrx_len()
     lstrx.build_hstrx_wid()
+        
 
-    listrix.len_slotrix = listrix.slotrix_eater(lstrx)
+    lstrx.len_slotrix = listrix.slotrix_eater(lstrx)
+    lstrx.build_hotrix()
 
     # print(lstrx.len_slotrix)
     # print(listrix.slotrix_eater(lstrx))
@@ -134,7 +140,11 @@ def spaceman():
     # print(lstrx.axial_wid(0,0))
     # print(listrix.letter_width_eater(lstrx.axial_wid(0,0))) # Works!
     # print(listrix.word_slot_eater(0, lstrx)) # Also works!
-    print(listrix.slotrix_eater(lstrx))
+    # print(listrix.slotrix_eater(lstrx)) # Works BEAUTIFUL! 
+    print(lstrx.len_slotrix)
+    print(lstrx.len_hotrix)
+    print('\n')
+    print(hist_choice(lstrx.len_hotrix, 0))
     # print(lstrx.len_slotrix)
     
     
