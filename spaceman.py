@@ -125,7 +125,7 @@ def spaceman():
     lstrx.build_hstrx_wid()
 
     print(split_list)
-    print(listrix.Listrix3.rel_chance(lstrx.hstrx_len))
-
+    print(lstrx.hstrx_wid)
+    
     
 spaceman()
