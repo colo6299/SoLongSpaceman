@@ -1,4 +1,4 @@
-# So long, Spaceman
+# So long, Spaceman.
 So. I should preface this by saying this is neither good code, nor a good program for the project spec. I apologize. 
 That being said, this is the coolest zero I've ever scored on a rubric... my project does not generate a word. 
 
