@@ -11,6 +11,8 @@ spaceman_state = []
 wrong_guesses = 0
 max_wrong = 15
 game_length = 0
+letters_complete = 0
+
 
 # only works for word slot histogram structure
 def hist_choice(hotrix, letter_index):
@@ -57,7 +59,8 @@ def load_words_list():
     max_length = list_item_length(words_list)
 
     print('Word length? ')
-    user_input = int(user_input_get())
+    user_input = user_input_get()
+    user_input.strip()
 
     if int(user_input) not in range(max_length):
         print('Please enter a number between 1 and ' + str(max_length - 2))
@@ -145,13 +148,35 @@ def display_state():
 def rebuild_state(nnr_choice, letter_index):
     global spaceman_state
     for slot in decode_nnr(nnr_choice[0]):
+        global letters_complete
+        letters_complete += 1
         spaceman_state[int(slot)] = decode_letter(letter_index) + ' '
+
+def space_killer(string):
+    string.replace(' ', '')
+    return string
 
 
 # Now, this is where you ask, "Wyatt, how can you have a spaceman program that doesn't choose a word?"
 # Well, I'll update the comment text when I figure that one out.
 
 def spaceman():
+
+    global guessed_letters
+    global spaceman_state
+    global wrong_guesses
+    global max_wrong
+    global game_length
+    global letters_complete
+
+    guessed_letters = []
+    spaceman_state = []
+    wrong_guesses = 0
+    max_wrong = 7
+    game_length = 0
+    letters_complete = 0
+
+
 
     print('''
 
@@ -167,10 +192,15 @@ def spaceman():
     ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢ ☢
     
     
-    Press Enter to continue.
+    Press Enter to continue, or type 'debug' to enable dev view.
 
     ''')
-    input()
+
+    debug = False
+    if user_input_get() == 'debug':
+        debug = True
+    else: 
+        debug = False
 
     # No, I don't know what all this does.
     split_list = load_words_list()
@@ -193,14 +223,13 @@ def spaceman():
     failed = False
     while not failed:
 
-        print('hotrix: ')
-        print(lstrx.len_hotrix)
-        print('slotrix: ')
-        print(lstrx.len_slotrix)
-
-
-        for i in range(26):
-            print(chr(i + 97) + ': ' + str(lstrx.letter_chance(i)))
+        if debug:
+            print('hotrix: ')
+            print(lstrx.len_hotrix)
+            print('slotrix: ')
+            print(lstrx.len_slotrix)
+            for i in range(26):
+                print(chr(i + 97) + ': ' + str(lstrx.letter_chance(i)))
 
         correct_flag = False
         nnr = ''
@@ -214,18 +243,20 @@ def spaceman():
         if chance_of_being_right > random_value:
             correct_flag = True
             
-            print('\nYou guessed right! Press Enter.')
+            print('\nYou guessed right! Press enter to continue.')
             user_input_get()
         else: 
-            global wrong_guesses
             wrong_guesses += 1
             lstrx.prune_letters(lttr)
-            print('\nYou guessed wrong! Press Enter.')
+            print('\nYou guessed wrong! Press enter to continue.')
             user_input_get()
         if wrong_guesses > max_wrong:
             failed = True
-            print('\nBetter luck next time. Q to quit, or Enter to restart')
-            user_input_get()
+            print('\nBetter luck next time. R to restart, anything else to quit:')
+            if user_input_get() == 'r':
+                spaceman()
+            else: 
+                exit
 
         if correct_flag:
             correct_flag = False
@@ -233,19 +264,33 @@ def spaceman():
             lstrx.prune_hotrix(nnr, lttr)
             rebuild_state(nnr, lttr)
 
-            print('nnr: ')
-            print(nnr)
+            if debug:
+                print('nnr: ')
+                print(nnr)
 
-        print('^v^')
-        print()
-        print(lstrx.removed_word_list)
-        print(lstrx.removed_words)
+        if debug: 
+            print('^v^')
+            print()
+            print(lstrx.removed_word_list)
+            print(lstrx.removed_words)
 
         lstrx.build_hstrx_len()
         lstrx.build_hstrx_wid()
         lstrx.len_slotrix = listrix.slotrix_eater(lstrx)
         lstrx.build_hotrix()
 
+        if letters_complete == game_length:
+            restr = ''
+            for string in spaceman_state:
+                restr = restr + string.replace(' ', '')
+            print('\nCongratulations!!! You won!')
+            print('The word was "' + restr + '"')
+            failed = True
+            print('\nR to restart, anything else to quit:')
+            if user_input_get() == 'r':
+                spaceman()
+            else: 
+                exit
 
 
 
