@@ -1,5 +1,5 @@
 import random
-import listrix   # Yeah, I already regret it.
+import listrix   # Yeah, I already regret it. kys
 
 
 # Hey, if I'm going to burn out, better sooner rather than later, right?
@@ -61,11 +61,13 @@ def load_words_list():
     print('Word length? ')
     user_input = user_input_get()
     user_input.strip()
-
-    if int(user_input) not in range(max_length):
+    
+    if not user_input.isnumeric():
+        return load_words_list()
+    elif int(user_input) not in range(max_length):
         print('Please enter a number between 1 and ' + str(max_length - 2))
         return load_words_list()
-    else: 
+    else:
         global game_length
         game_length = int(user_input)
         return prune_list(words_list, int(user_input))
@@ -143,7 +145,9 @@ def display_state():
     print()
     print(restr)
     print()
-    print('Guessed letters: ' + str(guessed_letters))
+    # It's only all on one line because I didn't want to type print() again. Wait...
+    print('Guessed letters: ' + str(guessed_letters) + '\nIncorrect guesses remaining: ' + str(max_wrong - wrong_guesses))
+    
 
 def rebuild_state(nnr_choice, letter_index):
     global spaceman_state
@@ -152,6 +156,7 @@ def rebuild_state(nnr_choice, letter_index):
         letters_complete += 1
         spaceman_state[int(slot)] = decode_letter(letter_index) + ' '
 
+
 def space_killer(string):
     string.replace(' ', '')
     return string
@@ -159,6 +164,19 @@ def space_killer(string):
 
 # Now, this is where you ask, "Wyatt, how can you have a spaceman program that doesn't choose a word?"
 # Well, I'll update the comment text when I figure that one out.
+# UPDATE: it... works? I'm not really sure how.
+
+def sinister_event(listrix_in, letter_in):
+    listrix_in.removed_words = listrix_in.removed_words_backup
+    listrix_in.removed_word_list = listrix_in.removed_word_list_backup
+    new_guessed_letters = list()
+    for lttr in guessed_letters:
+        for string in spaceman_state:
+            if lttr + ' ' == string:
+                new_guessed_letters.append(lttr)
+    # look, I don't know either. It works, ok?
+    new_guessed_letters.append(chr(letter_in + 97))
+    return new_guessed_letters
 
 def spaceman():
 
@@ -193,14 +211,19 @@ def spaceman():
     
     
     Press Enter to continue, or type 'debug' to enable dev view.
+    Type 's' to have a bad time. (you can enter both!)
 
     ''')
 
     debug = False
-    if user_input_get() == 'debug':
+    sinister = False
+    u_in = user_input_get()
+    if 'debug' in u_in:
         debug = True
-    else: 
-        debug = False
+    
+    if 's' in u_in:
+        s = True
+
 
     # No, I don't know what all this does.
     split_list = load_words_list()
@@ -243,6 +266,10 @@ def spaceman():
         if chance_of_being_right > random_value:
             correct_flag = True
             
+            if s:
+                print('<<YOU FEEL LIKE YOU\'RE HAVING A BAD TIME>>')
+                guessed_letters = sinister_event(lstrx, lttr)
+
             print('\nYou guessed right! Press enter to continue.')
             user_input_get()
         else: 
@@ -268,7 +295,7 @@ def spaceman():
                 print('nnr: ')
                 print(nnr)
 
-        if debug: 
+        if debug:
             print('^v^')
             print()
             print(lstrx.removed_word_list)
@@ -300,7 +327,7 @@ def spaceman():
     # print(lstrx.axial_wid(0,0))
     # print(listrix.letter_width_eater(lstrx.axial_wid(0,0))) # Works!
     # print(listrix.word_slot_eater(0, lstrx)) # Also works!
-    # print(listrix.slotrix_eater(lstrx)) # Works BEAUTIFUL! 
+    # print(listrix.slotrix_eater(lstrx)) # Works BEAUTIFUL!
     '''
     print(lstrx.len_slotrix)
     print(lstrx.len_hotrix)
@@ -312,5 +339,5 @@ def spaceman():
     
     
     '''
-    
-spaceman()
+if __name__ == "__main__":
+    spaceman()

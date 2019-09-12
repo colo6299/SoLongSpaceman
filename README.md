@@ -6,3 +6,5 @@ If you had a one letter blank and you knew it was either going to be the word "A
 
 This ~hangman~ spaceman program calulates the odds of any particular guess being correct and just... rolls the dice. No word generation, no matching letters, nothing! It simply\* places\*\* your guess somewhere\*\*\* in the answer string and recalculates the odds for next time.
 Simple\*\*\*\*, really. And yes, if I didn't tell you this you would't be able to tell the difference- this is mathematically identical to a normal game of ~hangman~ spaceman. In other words, this *may* have been a waste of time.
+
+Proceed with caution.
