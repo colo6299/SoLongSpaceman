@@ -228,6 +228,10 @@ def space_killer(string):
 # Well, I'll update the comment text when I figure that one out.
 # UPDATE: it... works? I'm not really sure how. 
 
+
+# NOTE: I updated sinister spaceman, I'm pretty sure it works better...? 
+# That or it's horribly broken. It's hard to tell considering "choose a new random word"
+# ...doesn't mean too terribly much to this program.
 def sinister_event(listrix_in, letter_in):
     """
     A 'sinister spaceman' event, replaces removed word... things(?) with their backups,
@@ -240,8 +244,8 @@ def sinister_event(listrix_in, letter_in):
     # Simply swapping the new for the old makes the sinister magic hapen.
 
     listrix_in.removed_words = listrix_in.removed_words_backup
-    listrix_in.removed_word_list = listrix_in.removed_word_list_backup
-    listrix_in.len_listr = listrix_in.len_listr_backup
+    listrix_in.removed_word_list = list(listrix_in.removed_word_list_backup)
+    listrix_in.len_listr = list(listrix_in.len_listr_backup)
 
     # this bit over here is for handling the content of the spaceman state.
     # yes, this could be solved with separate 'correct' and 'incorrect' letter
@@ -250,11 +254,11 @@ def sinister_event(listrix_in, letter_in):
     new_guessed_letters = list()
     for lttr in guessed_letters:
         for string in spaceman_state:
-            if lttr + ' ' == string:
+            if lttr + ' ' == string and (lttr not in new_guessed_letters):
                 new_guessed_letters.append(lttr)
 
     # just a bit of classic letter index => str conversion. I think I wrote
-    # something for this, but I honestly don't really remember.
+    # something for this, but I honestly don't really remember. This code is WET af
     new_guessed_letters.append(chr(letter_in + 97))
     return new_guessed_letters
 
@@ -321,7 +325,7 @@ def spaceman():
 
     # then slot the proto-list in the listrix
     lstrx.len_listr = listr_pre
-    lstrx.len_listr_backup = listr_pre
+    lstrx.len_listr_backup = list(listr_pre)
 
     # then build the 2d histogram listrix(s) WOOO ITS HAPPENING
     lstrx.build_hstrx_len()
