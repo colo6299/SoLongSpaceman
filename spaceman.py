@@ -1,5 +1,5 @@
 import random
-import listrix   # Yeah, I already regret it. kys
+import listrix   # Yeah, I already regret it. 
 
 
 # Hey, if I'm going to burn out, better sooner rather than later, right?
