@@ -41,7 +41,7 @@ def word_eater(word: str):
 
 
 # returns a string containing numbers representing the slots a particular letter occupies
-# Look, it's better than n^n nested lists (N ^ N R eplacers => nnr )
+# Look, it's better than n^n nested lists (N ^ N Replacers => nnr )
 def letter_width_eater(wid_list):
     """
     AKA turns bool lists into nnr's 
@@ -202,7 +202,7 @@ class Listrix3:
         """
         Squishes length and counts the things it squished!
         """
-        ristrix = list()
+        ristrix = list() 
         for i in range(self.width):
             ristrix.append(list())
             for j in range(self.depth):
